@@ -2,9 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const dbconnect = require('./Config/dbconnect');
 
-const userRoutes = require('./Routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
 
-const authenticate = require('./authMiddleware');
+const authenticate = require('./Middlewares/authMiddleware');
+
 const app = express();
 app.use(cors());
 
@@ -13,7 +14,7 @@ const dotenv = require("dotenv").config();
 const PORT = process.env.PORT
 
 dbconnect();
-
+app.use(express.json());
 
 // Routes
 app.use('/api/users', userRoutes);
