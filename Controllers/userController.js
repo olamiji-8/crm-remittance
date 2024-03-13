@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../Models/userModel');
+const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
   try {
@@ -85,6 +86,32 @@ exports.signUp = async (req, res) => {
   }
 };
 
+
+
+exports.logout = async (req, res) => {
+  try {
+    // Get the token from the request headers
+    const token = req.headers.authorization.split(' ')[1];
+
+    // Verify and decode the token
+    const decoded = jwt.verify(token, 'your_secret_key');
+
+    // Find the user in the database and update the token field
+    const user = await User.findOneAndUpdate(
+      { _id: decoded.id },
+      { $set: { token: null } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
 
 

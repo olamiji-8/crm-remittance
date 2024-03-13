@@ -16,4 +16,10 @@ router.post('/reset-password', userController.resetPassword);
 
 // Add any other routes you need
 
+
+//Logout route
+
+router.post('/logout', userController.logout);
+
+
 module.exports = router;
