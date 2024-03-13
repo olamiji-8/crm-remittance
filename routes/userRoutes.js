@@ -7,6 +7,8 @@ const userController = require("../Controllers/userController");
 // Login route
 router.post('/login', userController.login);
 
+router.get('/login', userController.getLogin);
+
 // Password reset route
 router.post('/reset-password', userController.resetPassword);
 

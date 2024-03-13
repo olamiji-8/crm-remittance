@@ -25,6 +25,24 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.getLogin = async (req, res) => {
+  try {
+    const { phoneNumber } = req.query;
+    const user = await User.findOne({ phoneNumber });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Remove sensitive fields from the response
+    const { password, ...userData } = user._doc;
+
+    res.status(200).json(userData);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 exports.resetPassword = async (req, res) => {
   try {
     const { phoneNumber } = req.body;
