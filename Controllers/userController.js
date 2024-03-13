@@ -51,3 +51,40 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+exports.signUp = async (req, res) => {
+  try {
+    const { phoneNumber, surname, name, password } = req.body;
+
+    // Check if a user with the provided phoneNumber already exists
+    const existingUser = await User.findOne({ phoneNumber });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User with this phone number already exists' });
+    }
+
+    // Hash the password provided by the user
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({
+      phoneNumber,
+      surname,
+      name,
+      password: hashedPassword,
+    });
+
+    // Save the new user to the database
+    await newUser.save();
+
+    // Return a success response
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    // Handle any errors that occurred during the sign-up process
+    console.error('Error during sign-up:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
