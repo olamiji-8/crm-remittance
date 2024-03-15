@@ -18,7 +18,7 @@ exports.getProfile = async (req, res) => {
 // Update user profile
 exports.updateProfile = async (req, res) => {
   try {
-    const { email, phoneNumber, address, country, state, city } = req.body;
+    const { email, phoneNumber, address, country, state, city, name, surname,chapter, chapterAddress, zone } = req.body;
     const user = await User.findById(req.user._id);
 
     if (!user) {
@@ -32,6 +32,11 @@ exports.updateProfile = async (req, res) => {
     user.country = country || user.country;
     user.state = state || user.state;
     user.city = city || user.city;
+    user.name = name || user.name;
+    user.surname = surname || user.surname;
+    user.chapter = chapter || user.chapter;
+    user.chapterAddress = chapterAddress || user.chapterAddress;
+    user.zone = zone || user.zone;
 
     // Save the updated user
     await user.save();
