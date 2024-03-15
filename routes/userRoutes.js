@@ -5,7 +5,7 @@ const userController = require("../Controllers/userController");
 
 const profileController = require('../Controllers/profileController');
 
-const adminController = require('../Controllers/adminController');
+// const adminController = require('../Controllers/adminController');
 
 
 // Login route
@@ -30,9 +30,9 @@ router.post('/logout', userController.logout);
 router.get('/profile', profileController.getProfile);
 router.put('/profile', profileController.updateProfile);
 
-// Admin updating profile
+// // Admin updating profile
 
-router.put('/admin/profile/:userId', adminController.updateUserProfile);
+// router.put('/admin/profile/:userId', adminController.updateUserProfile);
 
 
 module.exports = router;
