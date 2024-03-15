@@ -3,6 +3,10 @@ const router = express.Router();
 
 const userController = require("../Controllers/userController");
 
+const profileController = require('../Controllers/profileController');
+
+const adminController = require('../Controllers/adminController');
+
 
 // Login route
 router.post('/login', userController.login);
@@ -20,6 +24,15 @@ router.post('/reset-password', userController.resetPassword);
 //Logout route
 
 router.post('/logout', userController.logout);
+
+// Profile
+
+router.get('/profile', profileController.getProfile);
+router.put('/profile', profileController.updateProfile);
+
+// Admin updating profile
+
+router.put('/admin/profile/:userId', adminController.updateUserProfile);
 
 
 module.exports = router;

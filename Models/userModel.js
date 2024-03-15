@@ -5,7 +5,14 @@ const userSchema = new mongoose.Schema({
   surname: { type: String, required: true },
   phoneNumber: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  // Add any other fields you need
+  email: { type: String, required: true },
+  address: { type: String },
+  country: { type: String },
+  state: { type: String },
+  city: { type: String },
+  chapter: { type: String },
+  chapterAddress: { type: String },
+  zone: { type: String },
 });
 
 const User = mongoose.model('User', userSchema);
