@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
   try {
-    const { phoneNumber, password } = req.body;
-    const user = await User.findOne({ phoneNumber });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -30,8 +30,8 @@ exports.login = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
-    const { phoneNumber } = req.body;
-    const user = await User.findOne({ phoneNumber });
+    const { email } = req.body;
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -55,10 +55,10 @@ exports.resetPassword = async (req, res) => {
 
 exports.signUp = async (req, res) => {
   try {
-    const { phoneNumber, surname, name, password } = req.body;
+    const { email, surname, name, password } = req.body;
 
-    // Check if a user with the provided phoneNumber already exists
-    const existingUser = await User.findOne({ phoneNumber });
+    // Check if a user with the provided email already exists
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User with this phone number already exists' });
     }
