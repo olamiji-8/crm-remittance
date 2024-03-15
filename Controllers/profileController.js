@@ -46,3 +46,38 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+// Update profile picture
+exports.updateProfilePicture = async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+  
+      const user = await User.findById(req.user._id);
+      user.profilePicture = req.file.buffer;
+      await user.save();
+  
+      res.status(200).json({ message: 'Profile picture updated successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+  // Get profile picture
+  exports.getProfilePicture = async (req, res) => {
+    try {
+      const user = await User.findById(req.user._id);
+  
+      if (!user || !user.profilePicture) {
+        return res.status(404).json({ message: 'Profile picture not found' });
+      }
+  
+      res.set('Content-Type', 'image/jpeg'); // Adjust the content type based on your file format
+      res.send(user.profilePicture);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
